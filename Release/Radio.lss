@@ -1,0 +1,123 @@
+
+Radio.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  0000014e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000000fa  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  0000014e  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000180  2**2
+                  CONTENTS, READONLY
+  4 .debug_info   000005f4  00000000  00000000  000001bc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 000005a2  00000000  00000000  000007b0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   00000133  00000000  00000000  00000d52  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    00000208  00000000  00000000  00000e85  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  10:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  40:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d4 e0       	ldi	r29, 0x04	; 4
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+  74:	0e 94 5e 00 	call	0xbc	; 0xbc <main>
+  78:	0c 94 7b 00 	jmp	0xf6	; 0xf6 <_exit>
+
+0000007c <__bad_interrupt>:
+  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000080 <initI2C>:
+  80:	80 e2       	ldi	r24, 0x20	; 32
+  82:	80 93 b8 00 	sts	0x00B8, r24	; 0x8000b8 <__TEXT_REGION_LENGTH__+0x7e00b8>
+  86:	ec eb       	ldi	r30, 0xBC	; 188
+  88:	f0 e0       	ldi	r31, 0x00	; 0
+  8a:	80 81       	ld	r24, Z
+  8c:	84 60       	ori	r24, 0x04	; 4
+  8e:	80 83       	st	Z, r24
+  90:	08 95       	ret
+
+00000092 <i2cWaitForComplete>:
+  92:	80 91 bc 00 	lds	r24, 0x00BC	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+  96:	87 ff       	sbrs	r24, 7
+  98:	fc cf       	rjmp	.-8      	; 0x92 <i2cWaitForComplete>
+  9a:	08 95       	ret
+
+0000009c <i2cStart>:
+  9c:	84 ea       	ldi	r24, 0xA4	; 164
+  9e:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+  a2:	0c 94 49 00 	jmp	0x92	; 0x92 <i2cWaitForComplete>
+
+000000a6 <i2cStop>:
+  a6:	84 e9       	ldi	r24, 0x94	; 148
+  a8:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+  ac:	08 95       	ret
+
+000000ae <i2cSend>:
+  ae:	80 93 bb 00 	sts	0x00BB, r24	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7e00bb>
+  b2:	84 e8       	ldi	r24, 0x84	; 132
+  b4:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+  b8:	0c 94 49 00 	jmp	0x92	; 0x92 <i2cWaitForComplete>
+
+000000bc <main>:
+  bc:	0e 94 40 00 	call	0x80	; 0x80 <initI2C>
+  c0:	0e 94 4e 00 	call	0x9c	; 0x9c <i2cStart>
+  c4:	80 e6       	ldi	r24, 0x60	; 96
+  c6:	0e 94 57 00 	call	0xae	; 0xae <i2cSend>
+  ca:	0e 94 4e 00 	call	0x9c	; 0x9c <i2cStart>
+  ce:	8e e2       	ldi	r24, 0x2E	; 46
+  d0:	0e 94 57 00 	call	0xae	; 0xae <i2cSend>
+  d4:	89 e9       	ldi	r24, 0x99	; 153
+  d6:	0e 94 57 00 	call	0xae	; 0xae <i2cSend>
+  da:	80 ea       	ldi	r24, 0xA0	; 160
+  dc:	0e 94 57 00 	call	0xae	; 0xae <i2cSend>
+  e0:	80 e1       	ldi	r24, 0x10	; 16
+  e2:	0e 94 57 00 	call	0xae	; 0xae <i2cSend>
+  e6:	80 e0       	ldi	r24, 0x00	; 0
+  e8:	0e 94 57 00 	call	0xae	; 0xae <i2cSend>
+  ec:	0e 94 53 00 	call	0xa6	; 0xa6 <i2cStop>
+  f0:	80 e0       	ldi	r24, 0x00	; 0
+  f2:	90 e0       	ldi	r25, 0x00	; 0
+  f4:	08 95       	ret
+
+000000f6 <_exit>:
+  f6:	f8 94       	cli
+
+000000f8 <__stop_program>:
+  f8:	ff cf       	rjmp	.-2      	; 0xf8 <__stop_program>
